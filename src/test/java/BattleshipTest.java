@@ -6,15 +6,16 @@ import static org.junit.Assert.*;
 public class BattleshipTest {
 
     String[] ships = {"0:0,0:2", "2:2,2:3", "4:4,6:4", "6:1,9:1"};
+    String[] guesses1 = {"1:1", "2:2", "1:4", "2:3", "8:9", "4:4", "5:4", "6:4"};
+    String[] guesses2 = {"1:1", "1:2", "1:4", "2:3", "8:9", "4:4", "5:4", "6:4"};
 
     @Before
     public void setUp() {
         Battleship.gameBoard = new int[10][10];
-        Battleship.shipsCount = 0;
     }
 
     @Test
-    public void checkHorizontalShipSetUp(){
+    public void checkVerticalShipSetUp(){
         Battleship.setUpGame(ships);
         assertEquals(1, Battleship.gameBoard[0][0]);
         assertEquals(1, Battleship.gameBoard[0][1]);
@@ -24,7 +25,7 @@ public class BattleshipTest {
     }
 
     @Test
-    public void checkVerticalShipSetUp(){
+    public void checkHorizontalShipSetUp(){
         Battleship.setUpGame(ships);
         assertEquals(3, Battleship.gameBoard[4][4]);
         assertEquals(3, Battleship.gameBoard[5][4]);
@@ -64,5 +65,12 @@ public class BattleshipTest {
         Battleship.setUpGame(ships);
         assertFalse(Battleship.isSunk(2));
         assertTrue(Battleship.isSunk(5));
+    }
+
+    @Test
+    public void fullGame(){
+        Battleship.setUpGame(ships);
+        assertEquals(2, Battleship.play(ships, guesses1));
+        assertEquals(1, Battleship.play(ships, guesses2));
     }
 }
